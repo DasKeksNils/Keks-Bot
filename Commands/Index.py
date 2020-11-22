@@ -10,7 +10,7 @@ def self_commands(bot):
 
     @bot.command()
     async def ping(ctx):
-        await ctx.send(f"{round(bot.latency * 1000 , 0)} ms")
+        await ctx.send(f"ping <:FeelsDonkMan:780075218433212426>\n{round(bot.latency * 1000 , 0)} ms")
 
     @bot.command()
     @commands.cooldown(1, 10, commands.BucketType.user)
@@ -80,4 +80,19 @@ def self_commands(bot):
         async for x in ctx.channel.history(limit=number + 1):
             msgs.append(x)
         await ctx.channel.delete_messages(msgs)
-        await ctx.send(str(len(msgs)) + " messages sucessfully deleted :thumbsup:")
+        await ctx.send(str(number) + " messages sucessfully deleted :thumbsup:")
+
+    @bot.command()
+    @perms.is_mod()
+    async def clear_user(ctx, user: discord.User, *, limit: int):
+        if user is None or user == ctx.author:
+            await ctx.send("This user don't exist or is youself!")
+        else:
+            msgs = []
+            async for x in ctx.channel.history():
+                if x.author == user:
+                    msgs.append(x)
+                    if len(msgs) == limit:
+                        break
+            await ctx.channel.delete_messages(msgs)
+            await ctx.send(str(limit) + f" messages from {user} sucessfully deleted :thumsup:")

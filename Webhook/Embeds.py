@@ -2,13 +2,18 @@ import discord
 import time
 
 
+def timestamp():
+    t = str(time.strftime("%m/%d/%Y at %H:%M", time.localtime()))
+    return t
+
+
 def join(member):
     member_join = discord.Embed(
         title="Member joined",
         description=str(member.id) + "created at " + str(member.created_at),
         colour=discord.Colour.green()
     )
-    member_join.set_footer(text=str(time.strftime("%m/%d/%Y at %H:%M", time.localtime())), icon_url=member_join.Empty)
+    member_join.set_footer(text=timestamp(), icon_url=member_join.Empty)
     member_join.set_author(icon_url=member.avatar_url, name=member)
     return member_join
 
@@ -19,7 +24,7 @@ def leave(member):
         description=str(member.id) + "joined at " + str(member.created_at),
         colour=discord.Colour.orange()
     )
-    member_leave.set_footer(text=str(time.strftime("%m/%d/%Y at %H:%M", time.localtime())), icon_url=member_leave.Empty)
+    member_leave.set_footer(text=timestamp(), icon_url=member_leave.Empty)
     member_leave.set_author(icon_url=member.avatar_url, name=member)
     member_leave.add_field(name="Roles", value=str(member.roles))
     return member_leave
@@ -32,7 +37,7 @@ def delete(message):
         colour=discord.Colour.orange()
     )
     delete_embed.set_author(icon_url=message.author.avatar_url, name=message.author)
-    delete_embed.set_footer(text=str(time.strftime("%m/%d/%Y at %H:%M", time.localtime())), icon_url=delete_embed.Empty)
+    delete_embed.set_footer(text=timestamp(), icon_url=delete_embed.Empty)
     return delete_embed
 
 
@@ -41,8 +46,7 @@ def bulk_delete(messages):
         title="Bulk message delete",
         color=discord.Colour.orange()
     )
-    bulk_embed.add_field(name="Messages", value=str(messages))
-    bulk_embed.set_footer(text=str(time.strftime("%m/%d/%Y at %H:%M", time.localtime())), icon_url=bulk_embed.Empty)
+    bulk_embed.set_footer(text=timestamp(), icon_url=bulk_embed.Empty)
     return bulk_embed
 
 
@@ -54,7 +58,7 @@ def edit(before, after):
     msg_edit.add_field(name="Before", value=str(before.content), inline=True)
     msg_edit.add_field(name="After", value=str(after.content), inline=True)
     msg_edit.set_author(icon_url=before.author.avatar_url, name=before.author)
-    msg_edit.set_footer(text=str(time.strftime("%m/%d/%Y at %H:%M", time.localtime())), icon_url=msg_edit.Empty)
+    msg_edit.set_footer(text=timestamp(), icon_url=msg_edit.Empty)
     return msg_edit
 
 
@@ -66,7 +70,7 @@ def member_update(before, after):
     user_update.add_field(name="Before", value=str(before), inline=True)
     user_update.add_field(name="After", value=str(after), inline=True)
     user_update.set_author(icon_url=before.member.avatar_url, name=before.member)
-    user_update.set_footer(text=str(time.strftime("%m/%d/%Y at %H:%M", time.localtime())), icon_url=user_update.Empty)
+    user_update.set_footer(text=timestamp(), icon_url=user_update.Empty)
     return user_update
 
 
@@ -88,7 +92,7 @@ def ban(member, reason, mod):
     ban_embet.add_field(name="Reason", value=str(reason))
     ban_embet.add_field(name="Moderator", value=str(mod))
     ban_embet.set_author(name=member, icon_url=member.avatar_url)
-    ban_embet.set_footer(text=f"{member.id} \n" + str(time.strftime("%m/%d/%Y at %H:%M", time.localtime())), icon_url=ban_embet.Empty)
+    ban_embet.set_footer(text=f"{member.id} \n" + timestamp(), icon_url=ban_embet.Empty)
     return ban_embet
 
 
@@ -98,7 +102,7 @@ def unban(member):
         color=discord.Colour.dark_green()
     )
     unban_embet.set_author(name=member, icon_url=member.avatar_url)
-    unban_embet.set_footer(text=f"{member.id} \n" + str(time.strftime("%m/%d/%Y at %H:%M", time.localtime())), icon_url=unban_embet.Empty)
+    unban_embet.set_footer(text=f"{member.id} \n" + timestamp(), icon_url=unban_embet.Empty)
     return unban_embet
 
 
@@ -110,5 +114,5 @@ def kick(member, reason, mod):
     kick_embed.add_field(name="Reason", value=str(reason))
     kick_embed.add_field(name="Moderator", value=str(mod))
     kick_embed.set_author(name=member, icon_url=member.avatar_url)
-    kick_embed.set_footer(text=f"{member.id} \n" + str(time.strftime("%m/%d/%Y at %H:%M", time.localtime())), icon_url=kick_embed.Empty)
+    kick_embed.set_footer(text=f"{member.id} \n" + timestamp(), icon_url=kick_embed.Empty)
     return kick_embed

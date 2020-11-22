@@ -1,0 +1,8 @@
+# secrets
+config
+
+#Pycharm
+.idea
+
+#Log
+log.log

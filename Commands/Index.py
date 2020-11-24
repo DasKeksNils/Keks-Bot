@@ -30,7 +30,7 @@ def self_commands(bot):
         await ctx.send("https://media1.tenor.com/images/8909c612b5bb6264cad4b13366d24693/tenor.gif?itemid=19249577")
 
     @bot.command()
-    @perms.is_mod()
+    @commands.has_any_role("Admin", "Dev", "Moderator")
     async def ban(ctx, user: discord.User, *, reason=None):
         if user is None or user == ctx.author:
             await ctx.send("This User don't exist or is yourself!")
@@ -41,7 +41,7 @@ def self_commands(bot):
             await ch_log.member_ban(user, reason, ctx.author)
 
     @bot.command()
-    @perms.is_mod()
+    @commands.has_any_role("Admin", "Dev", "Moderator")
     async def ban_id(ctx, user, *, reason=None):
         user = await bot.fetch_user(int(user))
         if user is None or user == ctx.author:
@@ -53,7 +53,7 @@ def self_commands(bot):
             await ch_log.member_ban(user, reason, ctx.author)
 
     @bot.command()
-    @perms.is_mod()
+    @commands.has_any_role("Admin", "Dev", "Moderator")
     async def unban(ctx, user_id):
         user = await bot.fetch_user(int(user_id))
         if user is None or user == ctx.author:
@@ -64,7 +64,7 @@ def self_commands(bot):
             await ch_log.member_unban(user)
 
     @bot.command()
-    @perms.is_mod()
+    @commands.has_any_role("Admin", "Dev", "Moderator")
     async def kick(ctx, user: discord.User, *, reason=None):
         if user is None or user == ctx.author:
             await ctx.send("This user don't exist or is yourself!")
@@ -74,7 +74,7 @@ def self_commands(bot):
             log.kick(user, reason, ctx.author)
 
     @bot.command()
-    @perms.is_mod()
+    @commands.has_any_role("Admin", "Dev", "Moderator")
     async def clear(ctx, number: int):
         msgs = []
         async for x in ctx.channel.history(limit=number + 1):
@@ -83,7 +83,7 @@ def self_commands(bot):
         await ctx.send(str(number) + " messages sucessfully deleted :thumbsup:")
 
     @bot.command()
-    @perms.is_mod()
+    @commands.has_any_role("Admin", "Dev", "Moderator")
     async def clear_user(ctx, user: discord.User, *, limit: int):
         if user is None or user == ctx.author:
             await ctx.send("This user don't exist or is youself!")
@@ -96,3 +96,28 @@ def self_commands(bot):
                         break
             await ctx.channel.delete_messages(msgs)
             await ctx.send(str(limit) + f" messages from {user} sucessfully deleted :thumsup:")
+
+    @bot.command()
+    @commands.has_any_role("Admin", "Dev", "Moderator")
+    async def mute(ctx, user: discord.Member):
+        if user is None:
+            await ctx.send("This user don't exist!")
+            return
+        if await perms.is_muted(ctx, user):
+            await ctx.send(f"{user} is already muted!")
+        else:
+            muted_role = ctx.guild.get_role(perms.roles()["Muted"])
+            await user.add_roles(muted_role)
+            await ctx.send(f"{user} is now muted!")
+
+    @bot.command()
+    @commands.has_any_role("Admin", "Dev", "Moderator")
+    async def unmute(ctx, user: discord.Member):
+        if user is None:
+            await ctx.send("This user don't exist!")
+        if await perms.is_muted(ctx, user):
+            muted_role = ctx.guild.get_role(perms.roles()["Muted"])
+            await user.remove_roles(muted_role)
+            await ctx.send(f"{user} is now unmuted!")
+        else:
+            await ctx.send(f"{user} is not muted!")

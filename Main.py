@@ -2,6 +2,8 @@ from config import config
 from Events.events import message_events
 from Commands import Index
 
+# TODO: mute Log and message (embed)
+
 bot = config.bot()
 
 message_events(bot)

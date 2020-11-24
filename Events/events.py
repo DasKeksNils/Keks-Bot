@@ -50,7 +50,7 @@ def message_events(bot):
         await ch_log.join(member)
 
     @bot.event
-    async def on_member_leave(member):
+    async def on_member_remove(member):
         log.member_leave(member)
         await ch_log.leave(member)
 

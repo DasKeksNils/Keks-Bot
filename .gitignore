@@ -1,8 +1,11 @@
 # secrets
-config
+config/startup.json
 
 #Pycharm
 .idea
 
 #Log
 log.log
+
+# picture from .cat or .horse
+picture.jpg

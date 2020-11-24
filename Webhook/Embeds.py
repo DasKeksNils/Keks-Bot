@@ -10,10 +10,10 @@ def timestamp():
 def join(member):
     member_join = discord.Embed(
         title="Member joined",
-        description=str(member.id) + "created at " + str(member.created_at),
+        description="Created at " + str(member.created_at),
         colour=discord.Colour.green()
     )
-    member_join.set_footer(text=timestamp(), icon_url=member_join.Empty)
+    member_join.set_footer(text=str(member.id) + "\n" + timestamp(), icon_url=member_join.Empty)
     member_join.set_author(icon_url=member.avatar_url, name=member)
     return member_join
 
@@ -21,10 +21,10 @@ def join(member):
 def leave(member):
     member_leave = discord.Embed(
         title="Member left",
-        description=str(member.id) + "joined at " + str(member.created_at),
-        colour=discord.Colour.orange()
+        description="Joined at " + str(member.created_at),
+        colour=discord.Colour.red()
     )
-    member_leave.set_footer(text=timestamp(), icon_url=member_leave.Empty)
+    member_leave.set_footer(text=str(member.id) + "\n" + timestamp(), icon_url=member_leave.Empty)
     member_leave.set_author(icon_url=member.avatar_url, name=member)
     member_leave.add_field(name="Roles", value=str(member.roles))
     return member_leave

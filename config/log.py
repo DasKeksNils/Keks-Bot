@@ -58,3 +58,11 @@ def unban(member):
 
 def kick(member, reason, mod):
     log.info(timestamp() + f"[INFO] {member} got kicked by {mod} because of: {reason}")
+
+
+def mute(member, mod, reason):
+    log.info(timestamp() + f"[INFO] {member} was muted by {mod} because of: {reason}")
+
+
+def unmute(member, mod):
+    log.info(timestamp() + f"[INFO] {member} was unmuted by {mod}")

@@ -9,3 +9,6 @@ log.log
 
 # picture from .cat or .horse
 picture.jpg
+
+# pycache
+__pycache__

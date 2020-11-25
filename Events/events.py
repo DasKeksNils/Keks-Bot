@@ -1,3 +1,4 @@
+import discord
 from discord.ext import commands
 from config import log
 import Webhook.log_send as ch_log
@@ -10,6 +11,7 @@ def message_events(bot):
     @bot.event
     async def on_ready():
         log.ready(bot)
+        await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name="https://github.com/DerKeksTV/Keks-Bot"))
 
     @bot.event
     async def on_message(message):

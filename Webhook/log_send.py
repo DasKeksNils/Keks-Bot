@@ -56,3 +56,15 @@ async def member_kick(member, reason, mod):
     async with aiohttp.ClientSession() as session:
         webhook = Webhook.from_url(startup()["log_wh"], adapter=AsyncWebhookAdapter(session))
         await webhook.send(embed=Embeds.kick(member, reason, mod))
+
+
+async def mute(member, mod, reason):
+    async with aiohttp.ClientSession() as session:
+            webhook = Webhook.from_url(startup()["log_wh"], adapter=AsyncWebhookAdapter(session))
+            await webhook.send(embed=Embeds.mute(member=member, mod=mod, reason=reason))
+
+
+async def unmute(member, mod):
+    async with aiohttp.ClientSession() as session:
+        webhook = Webhook.from_url(startup()["log_wh"], adapter=AsyncWebhookAdapter(session))
+        await webhook.send(embed=Embeds.unmute(member=member, mod=mod))

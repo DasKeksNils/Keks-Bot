@@ -116,3 +116,26 @@ def kick(member, reason, mod):
     kick_embed.set_author(name=member, icon_url=member.avatar_url)
     kick_embed.set_footer(text=f"{member.id} \n" + timestamp(), icon_url=kick_embed.Empty)
     return kick_embed
+
+
+def mute(member, mod, reason):
+    mute_embed = discord.Embed(
+        title="Member muted",
+        color=discord.Colour.dark_orange()
+    )
+    mute_embed.add_field(name="Reason", value=reason)
+    mute_embed.add_field(name="Moderator", value=mod)
+    mute_embed.set_author(name=member, icon_url=member.avatar_url)
+    mute_embed.set_footer(text=f"{member.id} \n" + timestamp(), icon_url=mute_embed.Empty)
+    return mute_embed
+
+
+def unmute(member, mod):
+    unmute_embed = discord.Embed(
+        title="Member unmuted",
+        color=discord.Colour.green()
+    )
+    unmute_embed.add_field(name="Moderator",value=mod)
+    unmute_embed.set_author(name=member, icon_url=member.avatar_url)
+    unmute_embed.set_footer(text=f"{member.id} \n " + timestamp(), icon_url=unmute_embed.Empty)
+    return unmute_embed

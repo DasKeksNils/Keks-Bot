@@ -25,4 +25,3 @@ def channels():
 def log_channel(client):
     log_ch = client.get_channel(int(channels()["log_channel_id"]))
     return log_ch
-

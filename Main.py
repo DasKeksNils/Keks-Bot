@@ -5,6 +5,8 @@ from Commands import Index
 # TODO: mute log and message (embed)
 # TODO: autorole on join
 
+# TODO: error.py
+# TODO: __pycach__ delete and .gitignore
 
 bot = config.bot()
 

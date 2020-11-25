@@ -1,9 +1,10 @@
 import discord
 from discord.ext import commands
-from lib import download as lib
+from Commands.utils import download
 from Moderating.Perms import role as perms
 from config import log
 import Webhook.log_send as ch_log
+from Moderating.Perms import errors
 
 
 def self_commands(bot):
@@ -15,13 +16,13 @@ def self_commands(bot):
     @bot.command()
     @commands.cooldown(1, 10, commands.BucketType.user)
     async def cat(ctx):
-        lib.download("https://thiscatdoesnotexist.com/")
+        download.download("https://thiscatdoesnotexist.com/")
         await ctx.send(file=discord.File("picture.jpg"))
 
     @bot.command()
     @commands.cooldown(1, 10, commands.BucketType.user)
     async def horse(ctx):
-        lib.download("https://thishorsedoesnotexist.com/")
+        download.download("https://thishorsedoesnotexist.com/")
         await ctx.send(file=discord.File("picture.jpg"))
 
     @bot.command()
@@ -85,8 +86,8 @@ def self_commands(bot):
     @bot.command()
     @commands.has_any_role("Admin", "Dev", "Moderator")
     async def clear_user(ctx, user: discord.User, *, limit: int):
-        if user is None or user == ctx.author:
-            await ctx.send("This user don't exist or is youself!")
+        if user is None:
+            await ctx.send(errors.user_not_exist())
         else:
             msgs = []
             async for x in ctx.channel.history():
@@ -101,9 +102,9 @@ def self_commands(bot):
     @commands.has_any_role("Admin", "Dev", "Moderator")
     async def mute(ctx, user: discord.Member):
         if user is None:
-            await ctx.send("This user don't exist!")
+            await ctx.send(errors.user_not_exist())
             return
-        if await perms.is_muted(ctx, user):
+        if await perms.is_muted(user):
             await ctx.send(f"{user} is already muted!")
         else:
             muted_role = ctx.guild.get_role(perms.roles()["Muted"])
@@ -115,7 +116,7 @@ def self_commands(bot):
     async def unmute(ctx, user: discord.Member):
         if user is None:
             await ctx.send("This user don't exist!")
-        if await perms.is_muted(ctx, user):
+        if await perms.is_muted(user):
             muted_role = ctx.guild.get_role(perms.roles()["Muted"])
             await user.remove_roles(muted_role)
             await ctx.send(f"{user} is now unmuted!")

@@ -1,6 +1,8 @@
 from discord.ext import commands
 from config import log
 import Webhook.log_send as ch_log
+from Moderating.Perms import errors
+from Moderating.Perms import role as perms
 
 
 def message_events(bot):
@@ -38,7 +40,7 @@ def message_events(bot):
     @bot.event
     async def on_command_error(ctx, error):
         if isinstance(error, commands.CheckFailure):
-            await ctx.send("You don't have the permission to do that <:SmileW:779776042096918528>")
+            await ctx.send(errors.missing_permission())
         else:
             await ctx.send(error)
         log.command_error(ctx, error)
@@ -48,6 +50,9 @@ def message_events(bot):
     async def on_member_join(member):
         log.member_join(member)
         await ch_log.join(member)
+        user = perms.get_role(role="User", ctx=member)
+        print(user)
+        await member.add_roles(user)
 
     @bot.event
     async def on_member_remove(member):

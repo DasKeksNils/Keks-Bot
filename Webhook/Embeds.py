@@ -3,8 +3,7 @@ import time
 
 
 def timestamp():
-    t = str(time.strftime("%m/%d/%Y at %H:%M", time.localtime()))
-    return t
+    return str(time.strftime("%m/%d/%Y at %H:%M", time.localtime()))
 
 
 def join(member):
@@ -26,7 +25,7 @@ def leave(member):
     )
     member_leave.set_footer(text=str(member.id) + "\n" + timestamp(), icon_url=member_leave.Empty)
     member_leave.set_author(icon_url=member.avatar_url, name=member)
-    member_leave.add_field(name="Roles", value=str(member.roles))
+    member_leave.add_field(name="Roles", value=str([role.name for role in member.roles]))
     return member_leave
 
 
@@ -44,7 +43,8 @@ def delete(message):
 def bulk_delete(messages):
     bulk_embed = discord.Embed(
         title="Bulk message delete",
-        color=discord.Colour.orange()
+        color=discord.Colour.orange(),
+        description=str([message.content for message in messages])
     )
     bulk_embed.set_footer(text=timestamp(), icon_url=bulk_embed.Empty)
     return bulk_embed

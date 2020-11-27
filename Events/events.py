@@ -53,7 +53,6 @@ def message_events(bot):
         log.member_join(member)
         await ch_log.join(member)
         user = perms.get_role(role="User", ctx=member)
-        print(user)
         await member.add_roles(user)
 
     @bot.event

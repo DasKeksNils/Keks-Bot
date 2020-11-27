@@ -17,7 +17,7 @@ def ready(client):
 
 
 def message_send(message):
-    log.info(timestamp() + "[SEND] Message from {0.author} send in {0.channel} content: {0.content}".format(message))
+    log.info(timestamp() + "[SEND] Message from {0.author} sent in {0.channel} content: {0.content}".format(message))
 
 
 def message_delete(message):
@@ -25,7 +25,7 @@ def message_delete(message):
 
 
 def bulk_delete(messages):
-    log.info(timestamp() + f"[BULK_DELETE] Messages: {messages}")
+    log.info(timestamp() + "[BULK_DELETE] Messages were bulk deleted")
 
 
 def message_edit(before, after):
@@ -45,24 +45,24 @@ def member_update(before, after):
 
 
 def command_error(ctx, error):
-    log.info(timestamp() + "[INFO] {0.author} has an command error in {0.channel} : ".format(ctx) + str(error))
+    log.info(timestamp() + "[ERROR] {0.author} has an command error in {0.channel} : ".format(ctx) + str(error))
 
 
 def ban(member, reason, mod):
-    log.info(timestamp() + f"[INFO] {member} got banned from {mod} because of: {reason}")
+    log.info(timestamp() + f"[BAN] {member} got banned from {mod} because of: {reason}")
 
 
 def unban(member):
-    log.info(timestamp() + f"[INFO] {member} got unbanned.")
+    log.info(timestamp() + f"[UNBAN] {member} got unbanned.")
 
 
 def kick(member, reason, mod):
-    log.info(timestamp() + f"[INFO] {member} got kicked by {mod} because of: {reason}")
+    log.info(timestamp() + f"[KICK] {member} got kicked by {mod} because of: {reason}")
 
 
 def mute(member, mod, reason):
-    log.info(timestamp() + f"[INFO] {member} was muted by {mod} because of: {reason}")
+    log.info(timestamp() + f"[MUTE] {member} was muted by {mod} because of: {reason}")
 
 
 def unmute(member, mod):
-    log.info(timestamp() + f"[INFO] {member} was unmuted by {mod}")
+    log.info(timestamp() + f"[UNMUTE] {member} was unmuted by {mod}")

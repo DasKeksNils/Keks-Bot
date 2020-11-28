@@ -25,7 +25,7 @@ def message_delete(message):
 
 
 def bulk_delete(messages):
-    log.info(timestamp() + "[BULK_DELETE] Messages were bulk deleted")
+    log.info(timestamp() + f"[BULK_DELETE] Deletet messages: {[message.content for message in messages]}")
 
 
 def message_edit(before, after):

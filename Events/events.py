@@ -1,6 +1,7 @@
 import discord
 from discord.ext import commands
 from config import log
+from config import config
 import Webhook.log_send as ch_log
 from Moderating.Perms import errors
 from Moderating.Perms import role as perms
@@ -15,7 +16,7 @@ def message_events(bot):
 
     @bot.event
     async def on_message(message):
-        if message.author == bot.user:
+        if message.author == bot.user or message.channel.id == int(config.channels()["log_channel_id"]):
             return
         log.message_send(message)
         await bot.process_commands(message)

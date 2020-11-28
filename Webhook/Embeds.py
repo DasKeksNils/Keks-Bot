@@ -135,7 +135,39 @@ def unmute(member, mod):
         title="Member unmuted",
         color=discord.Colour.green()
     )
-    unmute_embed.add_field(name="Moderator",value=mod)
+    unmute_embed.add_field(name="Moderator", value=mod)
     unmute_embed.set_author(name=member, icon_url=member.avatar_url)
     unmute_embed.set_footer(text=f"{member.id} \n " + timestamp(), icon_url=unmute_embed.Empty)
     return unmute_embed
+
+
+def channel_create(channel):
+    create_embed = discord.Embed(
+        title="Channel created",
+        color=discord.Colour.blue()
+    )
+    create_embed.add_field(name="Name", value=channel.name)
+    create_embed.set_footer(text=f"{channel.id} \n" + timestamp(), icon_url=create_embed.Empty)
+    return create_embed
+
+
+def channel_delete(channel):
+    delete_embed = discord.Embed(
+        title="Channel deleted",
+        color=discord.Colour.dark_orange()
+    )
+    delete_embed.add_field(name="Name", value=channel.name)
+    delete_embed.add_field(name="Created at", value=str(channel.created_at))
+    delete_embed.set_footer(text=f"{channel.id} \n" + timestamp(), icon_url=delete_embed.Empty)
+    return delete_embed
+
+
+def channel_update(before, after):
+    update_embed = discord.Embed(
+        title="Channel edited",
+        color=discord.Colour.blue()
+    )
+    update_embed.add_field(name="Before:", value=before)
+    update_embed.add_field(name="After:", value=after)
+    update_embed.set_footer(text=f"{after.id} \n" + timestamp(), icon_url=update_embed.Empty)
+    return update_embed

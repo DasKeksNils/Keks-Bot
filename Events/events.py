@@ -15,6 +15,14 @@ def message_events(bot):
         await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name="https://github.com/DerKeksTV/Keks-Bot"))
 
     @bot.event
+    async def on_resumed():
+        log.resume()
+
+    @bot.event
+    async def on_disconnect():
+        log.disconnect()
+
+    @bot.event
     async def on_message(message):
         if message.author == bot.user or message.channel.id == int(config.channels()["log_channel_id"]):
             return
@@ -65,3 +73,22 @@ def message_events(bot):
     async def on_member_unban(guild, member):
         log.unban(member)
         await ch_log.member_unban(member)
+
+    @bot.event
+    async def on_guild_channel_create(channel):
+        log.channel_create(channel)
+        await ch_log.channel_create(channel)
+
+    @bot.event
+    async def on_guild_channel_delete(channel):
+        log.channel_delete(channel)
+        await ch_log.channel_delete(channel)
+
+    @bot.event
+    async def on_guild_channel_update(before, after):
+        log.channel_update(before=before, after=after)
+        await ch_log.channel_update(before=before, after=after)
+
+    @bot.event
+    async def on_relationship_add(self, relationship):
+        await discord.Relationship.accept(self)

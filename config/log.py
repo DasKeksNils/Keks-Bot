@@ -16,6 +16,16 @@ def ready(client):
     print("Logged in as {0.user}".format(client))
 
 
+def disconnect():
+    log.info(timestamp() + " Client has disconnnected")
+    print("Client has disconnected")
+
+
+def resume():
+    log.info(timestamp() + " Client has reconnected")
+    print("Client has reconnected")
+
+
 def message_send(message):
     log.info(timestamp() + "[SEND] Message from {0.author} sent in {0.channel} content: {0.content}".format(message))
 
@@ -66,3 +76,15 @@ def mute(member, mod, reason):
 
 def unmute(member, mod):
     log.info(timestamp() + f"[UNMUTE] {member} was unmuted by {mod}")
+
+
+def channel_create(channel):
+    log.info(timestamp() + f"[CHANNEL] {channel} was created.")
+
+
+def channel_delete(channel):
+    log.info(timestamp() + f"[CHANNEL] {channel} was deleted.")
+
+
+def channel_update(before, after):
+    log.info(timestamp() + f"[CHANNEL] {before.name} was edited. Before: {before} | After: {after}")

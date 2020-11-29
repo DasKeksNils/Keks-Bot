@@ -13,17 +13,17 @@ def timestamp():
 def ready(client):
     log.info(timestamp() + "Logged in as {0.user}".format(client))
     log.info(timestamp() + "Time as " + time.strftime("UTC %z", time.localtime()))
-    print("Logged in as {0.user}".format(client))
+    print(timestamp() + "[CLIENT] Logged in as {0.user}".format(client))
 
 
 def disconnect():
-    log.info(timestamp() + " Client has disconnnected")
-    print("Client has disconnected")
+    log.info(timestamp() + "[CLIENT] has disconnnected")
+    print(timestamp() + "Client has disconnected")
 
 
 def resume():
-    log.info(timestamp() + " Client has reconnected")
-    print("Client has reconnected")
+    log.info(timestamp() + "[CLIENT] has reconnected")
+    print(timestamp() + " Client has reconnected")
 
 
 def message_send(message):
@@ -88,3 +88,20 @@ def channel_delete(channel):
 
 def channel_update(before, after):
     log.info(timestamp() + f"[CHANNEL] {before.name} was edited. Before: {before} | After: {after}")
+    print(before)
+    print(after)
+
+
+def shutdown(ctx):
+    log.info(timestamp() + f"[SHUTDOWN] {ctx.author} had shutdown the bot.")
+    print(timestamp() + f"{ctx.author} had shutdown the bot.")
+
+
+def voice_update(member, before, after):
+    if before.channel != after.channel:
+        if before.channel is None:
+            log.info(timestamp() + f"[MEMBER] {member} ({member.id}) joint channel: {after.channel} ({after.channel.id})")
+        elif after.channel is None:
+            log.info(timestamp() + f"[MEMBER] {member} ({member.id}) left channel: {before.channel} ({before.channel.id})")
+        else:
+            log.info(timestamp() + f"[MEMBER] {member} ({member.id}) switch channel from {before.channel} ({before.channel.id}) to {after.channel} ({after.channel.id})")

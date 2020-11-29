@@ -117,7 +117,7 @@ def self_commands(bot):
     @commands.has_any_role("Admin", "Dev", "Moderator")
     async def unmute(ctx, user: discord.Member):
         if user is None:
-            await ctx.send("This user don't exist!")
+            await ctx.send(errors.user_not_exist())
         if await perms.is_muted(user):
             muted_role = ctx.guild.get_role(perms.roles()["Muted"])
             await user.remove_roles(muted_role)
@@ -126,3 +126,10 @@ def self_commands(bot):
             await ctx.send(f"{user} is now unmuted!")
         else:
             await ctx.send(f"{user} is not muted!")
+
+    @bot.command()
+    @commands.has_any_role("Admin")
+    async def shutdown(ctx):
+        await ctx.message.add_reaction("<:PepeOkay:779775701528215553>")
+        await bot.close()
+        log.shutdown(ctx)

@@ -86,9 +86,10 @@ def message_events(bot):
 
     @bot.event
     async def on_guild_channel_update(before, after):
-        log.channel_update(before=before, after=after)
-        await ch_log.channel_update(before=before, after=after)
+        if before != after:
+            log.channel_update(before=before, after=after)
+            await ch_log.channel_update(before=before, after=after)
 
     @bot.event
-    async def on_relationship_add(self, relationship):
-        await discord.Relationship.accept(self)
+    async def on_voice_state_update(member, before, after):
+        log.voice_update(member, before, after)

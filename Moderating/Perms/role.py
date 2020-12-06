@@ -17,7 +17,4 @@ def roles():
 
 
 async def is_muted(user):
-    if get_role(role="Muted", ctx=user) in user.roles:
-        return True
-    else:
-        return False
+    return get_role(role="Muted", ctx=user) in user.roles

@@ -12,7 +12,7 @@ def join(member):
         description="Created at " + str(member.created_at),
         colour=discord.Colour.green()
     )
-    member_join.set_footer(text=str(member.id) + "\n" + timestamp(), icon_url=member_join.Empty)
+    member_join.set_footer(text=f"{member.id} \n" + timestamp(), icon_url=member_join.Empty)
     member_join.set_author(icon_url=member.avatar_url, name=member)
     return member_join
 
@@ -23,7 +23,7 @@ def leave(member):
         description="Joined at " + str(member.created_at),
         colour=discord.Colour.red()
     )
-    member_leave.set_footer(text=str(member.id) + "\n" + timestamp(), icon_url=member_leave.Empty)
+    member_leave.set_footer(text=f"{member.id} \n" + timestamp(), icon_url=member_leave.Empty)
     member_leave.set_author(icon_url=member.avatar_url, name=member)
     member_leave.add_field(name="Roles", value=str([role.name for role in member.roles]))
     return member_leave
@@ -36,7 +36,7 @@ def delete(message):
         colour=discord.Colour.orange()
     )
     delete_embed.set_author(icon_url=message.author.avatar_url, name=message.author)
-    delete_embed.set_footer(text=timestamp(), icon_url=delete_embed.Empty)
+    delete_embed.set_footer(text=f"{message.id} \n" + timestamp(), icon_url=delete_embed.Empty)
     return delete_embed
 
 
@@ -50,16 +50,16 @@ def bulk_delete(messages):
     return bulk_embed
 
 
-def edit(before, after):
-    msg_edit = discord.Embed(
+def msg_edit(before, after):
+    edit_embed = discord.Embed(
         title="Message edited in " + str(before.channel),
         colour=discord.Colour.dark_green()
     )
-    msg_edit.add_field(name="Before", value=str(before.content), inline=True)
-    msg_edit.add_field(name="After", value=str(after.content), inline=True)
-    msg_edit.set_author(icon_url=before.author.avatar_url, name=before.author)
-    msg_edit.set_footer(text=timestamp(), icon_url=msg_edit.Empty)
-    return msg_edit
+    edit_embed.add_field(name="Before", value=str(before.content), inline=True)
+    edit_embed.add_field(name="After", value=str(after.content), inline=True)
+    edit_embed.set_author(icon_url=before.author.avatar_url, name=before.author)
+    edit_embed.set_footer(text=f"{after.id} \n" + timestamp(), icon_url=edit_embed.Empty)
+    return edit_embed
 
 
 def member_update(before, after):
@@ -70,7 +70,7 @@ def member_update(before, after):
     user_update.add_field(name="Before", value=str(before), inline=True)
     user_update.add_field(name="After", value=str(after), inline=True)
     user_update.set_author(icon_url=before.member.avatar_url, name=before.member)
-    user_update.set_footer(text=timestamp(), icon_url=user_update.Empty)
+    user_update.set_footer(text=f"{after.id} \n" + timestamp(), icon_url=user_update.Empty)
     return user_update
 
 
@@ -171,3 +171,16 @@ def channel_update(before, after):
     update_embed.add_field(name="After:", value=after)
     update_embed.set_footer(text=f"{after.id} \n" + timestamp(), icon_url=update_embed.Empty)
     return update_embed
+
+
+def server_info(ctx):
+    info_embed = discord.Embed(
+        title="Server Info",
+        color=discord.Colour.purple()
+    )
+    info_embed.set_author(name=ctx.guild.name, icon_url=ctx.guild.icon_url)
+    info_embed.add_field(name="Created at:", value=str(ctx.guild.created_at))
+    info_embed.add_field(name="Owner:", value=str(ctx.guild.owner))
+    info_embed.add_field(name="Members:", value=str(ctx.guild.member_count))
+    info_embed.set_footer(text=f"Server_id: {ctx.guild.id} \n" + timestamp(), icon_url=info_embed.Empty)
+    return info_embed

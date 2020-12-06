@@ -23,15 +23,15 @@ def disconnect():
 
 def resume():
     log.info(timestamp() + "[CLIENT] has reconnected")
-    print(timestamp() + " Client has reconnected")
+    print(timestamp() + "Client has reconnected")
 
 
-def message_send(message):
-    log.info(timestamp() + "[SEND] Message from {0.author} sent in {0.channel} content: {0.content}".format(message))
+def message_send(msg):
+    log.info(timestamp() + f"[SEND] Message ({msg.id}) from {msg.author} ({msg.author.id}) sent in {msg.channel} ({msg.channel.id}) content: {msg.content}")
 
 
-def message_delete(message):
-    log.info(timestamp() + "[DELETE] Message from {0.author} deleted in {0.channel} content: {0.content}".format(message))
+def message_delete(msg):
+    log.info(timestamp() + f"[DELETE] Message ({msg.id}) from {msg.author} ({msg.author.id}) deleted in {msg.channel} ({msg.channel.id}) content: {msg.content}")
 
 
 def bulk_delete(messages):
@@ -39,55 +39,55 @@ def bulk_delete(messages):
 
 
 def message_edit(before, after):
-    log.info(timestamp() + "[EDIT] Message from " + str(before.author) + " edited in " + str(before.channel) + " before: " + str(before.content) + " | to: " + str(after.content))
+    log.info(timestamp() + f"[EDIT] Message ({after.id}) from {before.author} ({before.author.id}) edited in {before.channel} ({before.channel.id}) before: {before.content} | to: {after.content}")
 
 
 def member_join(member):
-    log.info(timestamp() + "[JOIN] Member {} joined.".format(member))
+    log.info(timestamp() + f"[JOIN] Member {member} ({member.id}) joined.")
 
 
 def member_leave(member):
-    log.info(timestamp() + "[LEFT] Member {} left.".format(member))
+    log.info(timestamp() + f"[LEFT] Member {member} ({member.id}) left.")
 
 
 def member_update(before, after):
-    log.info(timestamp() + "[UPDATE] Member " + before.name + " changed " + before + " into " + after)
+    log.info(timestamp() + f"[UPDATE] Member {before.name} ({before.id}) changed {before} into {after}")
 
 
 def command_error(ctx, error):
-    log.info(timestamp() + "[ERROR] {0.author} has an command error in {0.channel} : ".format(ctx) + str(error))
+    log.info(timestamp() + f"[ERROR] {ctx.author} ({ctx.author.id}) has an command error in {ctx.channel} : {error}")
 
 
 def ban(member, reason, mod):
-    log.info(timestamp() + f"[BAN] {member} got banned from {mod} because of: {reason}")
+    log.info(timestamp() + f"[BAN] {member} ({member.id}) got banned from {mod} ({mod.id}) because of: {reason}")
 
 
 def unban(member):
-    log.info(timestamp() + f"[UNBAN] {member} got unbanned.")
+    log.info(timestamp() + f"[UNBAN] {member} ({member.id}) got unbanned.")
 
 
 def kick(member, reason, mod):
-    log.info(timestamp() + f"[KICK] {member} got kicked by {mod} because of: {reason}")
+    log.info(timestamp() + f"[KICK] {member} ({member.id}) got kicked by {mod} ({mod.id}) because of: {reason}")
 
 
 def mute(member, mod, reason):
-    log.info(timestamp() + f"[MUTE] {member} was muted by {mod} because of: {reason}")
+    log.info(timestamp() + f"[MUTE] {member} ({member.id}) was muted by {mod} ({mod.id}) because of: {reason}")
 
 
 def unmute(member, mod):
-    log.info(timestamp() + f"[UNMUTE] {member} was unmuted by {mod}")
+    log.info(timestamp() + f"[UNMUTE] {member} ({member.id}) was unmuted by {mod} ({mod.id})")
 
 
 def channel_create(channel):
-    log.info(timestamp() + f"[CHANNEL] {channel} was created.")
+    log.info(timestamp() + f"[CHANNEL] {channel} ({channel.id}) was created.")
 
 
 def channel_delete(channel):
-    log.info(timestamp() + f"[CHANNEL] {channel} was deleted.")
+    log.info(timestamp() + f"[CHANNEL] {channel} ({channel.id}) was deleted.")
 
 
 def channel_update(before, after):
-    log.info(timestamp() + f"[CHANNEL] {before.name} was edited. Before: {before} | After: {after}")
+    log.info(timestamp() + f"[CHANNEL] {before.name} ({before.id}) was edited. Before: {before} | After: {after}")
     print(before)
     print(after)
 

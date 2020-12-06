@@ -19,7 +19,7 @@ async def bulk_delete(messages):
 async def edit(before, after):
     async with aiohttp.ClientSession() as session:
         webhook = Webhook.from_url(startup()["log_wh"], adapter=AsyncWebhookAdapter(session))
-        await webhook.send(embed=Embeds.edit(before=before, after=after))
+        await webhook.send(embed=Embeds.msg_edit(before=before, after=after))
 
 
 async def join(member):

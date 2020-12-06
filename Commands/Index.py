@@ -5,6 +5,7 @@ from Moderating.Perms import role as perms
 from config import log
 import Webhook.log_send as ch_log
 from Moderating.Perms import errors
+from Webhook import Embeds
 
 
 def self_commands(bot):
@@ -133,3 +134,9 @@ def self_commands(bot):
         await ctx.message.add_reaction("<:PepeOkay:779775701528215553>")
         await bot.close()
         log.shutdown(ctx)
+
+# TODO: improve serverinfo command
+    @bot.command()
+    @commands.cooldown(1, 30, commands.BucketType.guild)
+    async def serverinfo(ctx):
+        await ctx.send(embed=Embeds.server_info(ctx))

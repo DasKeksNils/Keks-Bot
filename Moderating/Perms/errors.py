@@ -1,9 +1,11 @@
 
 def missing_permission():
-    e = "You don't have the permission to do that <:SmileW:779776042096918528>"
-    return e
+    return ":x: Error 401: Unauthorized \n You don't have the permission to do that <:SmileW:779776042096918528>"
 
 
 def user_not_exist():
-    e = "This user doesn't exist!"
-    return e
+    return ":x: Error 404: This user doesn't exist or is yourself!"
+
+
+def aguments():
+    return ":x: Error 400: Not enough arguments!"

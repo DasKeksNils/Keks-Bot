@@ -37,39 +37,52 @@ def self_commands(bot):
         if user is None or user == ctx.author:
             await ctx.send("This User don't exist or is yourself!")
         else:
-            await user.send(f"You got banned from {ctx.guild} because of {reason}.")
-            await ctx.guild.ban(user, reason=reason)
-            log.ban(user, reason, ctx.author)
-            await ch_log.member_ban(user, reason, ctx.author)
+            bans = await ctx.guild.bans()
+            for BanEntry in bans:
+                if BanEntry.user == user:
+                    await ctx.send("User is already banned!")
+                else:
+                    await ctx.guild.ban(user, reason=reason)
+                    log.ban(user, reason, ctx.author)
+                    await ch_log.member_ban(user, reason, ctx.author)
 
     @bot.command()
     @commands.has_any_role("Admin", "Dev", "Moderator")
     async def ban_id(ctx, user, *, reason=None):
         user = await bot.fetch_user(int(user))
         if user is None or user == ctx.author:
-            await ctx.send("This User don't exist or is yourself!")
+            await ctx.send(errors.user_not_exist())
         else:
-            await user.send(f"You got banned from {ctx.guild} because of {reason}.")
-            await ctx.guild.ban(user, reason=reason)
-            log.ban(user, reason, ctx.author)
-            await ch_log.member_ban(user, reason, ctx.author)
+            bans = await ctx.guild.bans()
+            for BanEntry in bans:
+                if BanEntry.user == user:
+                    ctx.send("User is already banned")
+                else:
+                    await ctx.guild.ban(user, reason=reason)
+                    log.ban(user, reason, ctx.author)
+                    await ch_log.member_ban(user, reason, ctx.author)
 
     @bot.command()
     @commands.has_any_role("Admin", "Dev", "Moderator")
     async def unban(ctx, user_id):
         user = await bot.fetch_user(int(user_id))
         if user is None or user == ctx.author:
-            await ctx.send("This user don't exist or is yourself!")
+            await ctx.send(errors.user_not_exist())
         else:
-            await ctx.guild.unban(user)
-            log.unban(user)
-            await ch_log.member_unban(user)
+            bans = await ctx.guild.bans()
+            for BanEntry in bans:
+                if BanEntry.user == user:
+                    await ctx.guild.unban(user)
+                    log.unban(user)
+                    await ch_log.member_unban(user)
+                else:
+                    await ctx.send("Not Banned")
 
     @bot.command()
     @commands.has_any_role("Admin", "Dev", "Moderator")
     async def kick(ctx, user: discord.User, *, reason=None):
         if user is None or user == ctx.author:
-            await ctx.send("This user don't exist or is yourself!")
+            await ctx.send(errors.user_not_exist())
         else:
             await ctx.guild.kick(user, reason=reason)
             await ch_log.member_kick(user, reason, ctx.author)

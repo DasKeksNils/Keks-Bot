@@ -52,8 +52,11 @@ def message_events(bot):
     async def on_command_error(ctx, error):
         if isinstance(error, commands.CheckFailure):
             await ctx.send(errors.missing_permission())
+        elif isinstance(error, commands.UserNotFound):
+            await ctx.send(errors.user_not_exist())
         else:
             await ctx.send(error)
+
         log.command_error(ctx, error)
         print(error)
 

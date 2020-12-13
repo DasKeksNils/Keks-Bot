@@ -74,16 +74,6 @@ def member_update(before, after):
     return user_update
 
 
-def report_help(message):
-    r_help = discord.Embed(
-        title="Help Report",
-        color=discord.Colour.magenta(),
-        description=message.author.mention
-    )
-    r_help.add_field(name="How to Report", value=".report message_id")
-    return r_help
-
-
 def ban(member, reason, mod):
     ban_embet = discord.Embed(
         title="Member got banned!",
@@ -173,14 +163,4 @@ def channel_update(before, after):
     return update_embed
 
 
-def server_info(ctx):
-    info_embed = discord.Embed(
-        title="Server Info",
-        color=discord.Colour.purple()
-    )
-    info_embed.set_author(name=ctx.guild.name, icon_url=ctx.guild.icon_url)
-    info_embed.add_field(name="Created at:", value=str(ctx.guild.created_at))
-    info_embed.add_field(name="Owner:", value=str(ctx.guild.owner))
-    info_embed.add_field(name="Members:", value=str(ctx.guild.member_count))
-    info_embed.set_footer(text=f"Server_id: {ctx.guild.id} \n" + timestamp(), icon_url=info_embed.Empty)
-    return info_embed
+

@@ -13,7 +13,7 @@ def command(bot):
         else:
             try:
                 user = ctx.guild.get_member(int(user_or))
-            except:
+            except ValueError:
                 user = ctx.guild.get_member(int(user_or[3:len(user_or) - 1]))
 
         embed = discord.Embed(

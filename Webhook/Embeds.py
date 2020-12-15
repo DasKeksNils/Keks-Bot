@@ -161,6 +161,3 @@ def channel_update(before, after):
     update_embed.add_field(name="After:", value=after)
     update_embed.set_footer(text=f"{after.id} \n" + timestamp(), icon_url=update_embed.Empty)
     return update_embed
-
-
-

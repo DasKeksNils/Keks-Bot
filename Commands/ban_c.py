@@ -11,7 +11,7 @@ def ban_commands(bot):
     async def kick(ctx, user_or, *, reason=None):
         try:
             user = await bot.fetch_user(int(user_or))
-        except:
+        except ValueError:
             user = await bot.fetch_user(int(user_or[3:len(user_or) - 1]))
         if user is None or user == ctx.author:
             await ctx.send(errors.user_not_exist())
@@ -25,7 +25,7 @@ def ban_commands(bot):
     async def ban(ctx, user_or, *, reason=None):
         try:
             user = await bot.fetch_user(int(user_or))
-        except:
+        except ValueError:
             user = await bot.fetch_user(int(user_or[3:len(user_or) - 1]))
         if user is None or user == ctx.author:
             await ctx.send(errors.user_not_exist())
@@ -56,4 +56,3 @@ def ban_commands(bot):
                     return
         await ctx.guild.unban(user)
         log.unban(user)
-        await ch_log.member_unban(user)

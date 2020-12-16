@@ -1,6 +1,6 @@
 import discord
 import time
-
+from Moderating.Perms import role
 
 def timestamp():
     return str(time.strftime("%m/%d/%Y at %H:%M", time.localtime()))
@@ -25,7 +25,7 @@ def leave(member):
     )
     member_leave.set_footer(text=f"{member.id} \n" + timestamp(), icon_url=member_leave.Empty)
     member_leave.set_author(icon_url=member.avatar_url, name=member)
-    member_leave.add_field(name="Roles", value=str([role.name for role in member.roles]))
+    member_leave.add_field(name="Roles", value=role.list_roles(member))
     return member_leave
 
 

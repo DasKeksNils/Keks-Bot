@@ -1,6 +1,7 @@
 import discord
 from discord.ext import commands
 import time
+from Moderating.Perms import role
 
 
 def command(bot):
@@ -24,5 +25,5 @@ def command(bot):
         embed.set_footer(text=f"{user.id} \n" + time.strftime("%m/%d/%Y at %H:%M", time.localtime()), icon_url=embed.Empty)
         embed.add_field(name="Created at", value=str(user.created_at))
         embed.add_field(name="Joined at", value=str(user.joined_at))
-        embed.add_field(name="Roles", value=str([role.name for role in user.roles]), inline=False)
+        embed.add_field(name="Roles", value=role.list_roles(user), inline=False)
         await ctx.send(embed=embed)

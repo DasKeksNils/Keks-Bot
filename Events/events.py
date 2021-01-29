@@ -1,10 +1,9 @@
 import discord
-from discord.ext import commands
 from config import log
 from config import config
 import Webhook.log_send as ch_log
-from Moderating.Perms import errors
 from Moderating.Perms import role as perms
+# from Database import unmute_temps as unmute
 
 
 def message_events(bot):
@@ -12,7 +11,15 @@ def message_events(bot):
     @bot.event
     async def on_ready():
         log.ready(bot)
+        print(1)
         await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name="https://github.com/DerKeksTV/Keks-Bot"))
+        print(2)
+
+        # asyncio.run(await asyncio.threads.to_thread(await unmute.unmute_loop(bot)))
+        # Process.run(Process(target=unmute.unmute_loop, args=bot,))
+        # t = threading.Thread(target=asyncio.set(await unmute.unmute_loop(bot)))
+        # print(1.5)
+        # t.start()
 
     @bot.event
     async def on_resumed():
@@ -47,18 +54,6 @@ def message_events(bot):
             return
         log.message_edit(before=before, after=after)
         await ch_log.edit(before=before, after=after)
-
-    @bot.event
-    async def on_command_error(ctx, error):
-        if isinstance(error, commands.CheckFailure):
-            await ctx.send(errors.missing_permission())
-        elif isinstance(error, commands.UserNotFound):
-            await ctx.send(errors.user_not_exist())
-        else:
-            await ctx.send(error)
-
-        log.command_error(ctx, error)
-        print(error)
 
     @bot.event
     async def on_member_join(member):

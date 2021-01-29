@@ -1,16 +1,18 @@
 # secrets
 config/startup.json
+config/mongodb.json
 
 #Pycharm
 .idea
 
-#Log
+#Log and 2. log for unmute Tempmutes
 log.log
+Database/log.log
 
-# picture from .cat or .horse
+#picture from .cat or .horse
 picture.jpg
 
-# pycache
+#pycache
 __pycache__
 
 #TODO

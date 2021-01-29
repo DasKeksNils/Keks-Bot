@@ -2,6 +2,7 @@ import discord
 import time
 from Moderating.Perms import role
 
+
 def timestamp():
     return str(time.strftime("%m/%d/%Y at %H:%M", time.localtime()))
 
@@ -108,25 +109,43 @@ def kick(member, reason, mod):
     return kick_embed
 
 
-def mute(member, mod, reason):
+def mute(member, mod, reason, ban_id):
     mute_embed = discord.Embed(
         title="Member muted",
         color=discord.Colour.dark_orange()
     )
-    mute_embed.add_field(name="Reason", value=reason)
     mute_embed.add_field(name="Moderator", value=mod)
-    mute_embed.set_author(name=member, icon_url=member.avatar_url)
+    mute_embed.add_field(name="Reason", value=reason)
+    mute_embed.add_field(name="Ban_id", value=f"#{ban_id}")
+    mute_embed.set_author(name=member.name, icon_url=member.avatar_url)
     mute_embed.set_footer(text=f"{member.id} \n" + timestamp(), icon_url=mute_embed.Empty)
     return mute_embed
 
 
-def unmute(member, mod):
+def tempmute(member, mod, reason, duration, ban_id):
+    tempmute_embed = discord.Embed(
+        title="Member tempmuted",
+        color=discord.Colour.dark_orange()
+    )
+    tempmute_embed.add_field(name="Moderator", value=mod)
+    tempmute_embed.add_field(name="Ban_id", value=ban_id)
+    tempmute_embed.add_field(name="Duration", value=duration)
+    tempmute_embed.add_field(name="Reason", value=reason)
+    tempmute_embed.set_author(name=member.name, icon_url=member.avatar_url)
+    tempmute_embed.set_footer(text=f"{member.id} \n" + timestamp(), icon_url=tempmute_embed.Empty)
+    return tempmute_embed
+
+
+def unmute(member, mod, ban_id, reason, totype):
     unmute_embed = discord.Embed(
         title="Member unmuted",
         color=discord.Colour.green()
     )
     unmute_embed.add_field(name="Moderator", value=mod)
-    unmute_embed.set_author(name=member, icon_url=member.avatar_url)
+    unmute_embed.add_field(name="Ban_id", value=ban_id)
+    unmute_embed.add_field(name="Type", value=totype)
+    unmute_embed.add_field(name="reason", value=reason)
+    unmute_embed.set_author(name=member.name, icon_url=member.avatar_url)
     unmute_embed.set_footer(text=f"{member.id} \n " + timestamp(), icon_url=unmute_embed.Empty)
     return unmute_embed
 

@@ -6,8 +6,7 @@ log.basicConfig(filename="log.log", level=log.INFO)
 
 
 def timestamp():
-    ts = time.strftime(" [%m/%d/%Y | %H:%M:%S] ", time.localtime())
-    return str(ts)
+    return str(time.strftime(" [%m/%d/%Y | %H:%M:%S] ", time.localtime()))
 
 
 def ready(client):
@@ -70,8 +69,12 @@ def kick(member, reason, mod):
     log.info(timestamp() + f"[KICK] {member} ({member.id}) got kicked by {mod} ({mod.id}) because of: {reason}")
 
 
-def mute(member, mod, reason):
-    log.info(timestamp() + f"[MUTE] {member} ({member.id}) was muted by {mod} ({mod.id}) because of: {reason}")
+def mute(member, mod, reason, ban_id):
+    log.info(timestamp() + f"[MUTE] {member} ({member.id}) was muted (ban_id: {ban_id}) by {mod} ({mod.id}) because of: {reason}")
+
+
+def tempmute(member, mod, reason, duration, ban_id):
+    log.info(timestamp() + f"[TEMPMUTE] {member} ({member.id}) was tempmuted (ban_id: {ban_id}) {duration} by {mod} ({mod.id}) because of {reason}")
 
 
 def unmute(member, mod):
@@ -93,8 +96,8 @@ def channel_update(before, after):
 
 
 def shutdown(ctx):
-    log.info(timestamp() + f"[SHUTDOWN] {ctx.author} had shutdown the bot.")
-    print(timestamp() + f"{ctx.author} had shutdown the bot.")
+    log.info(timestamp() + f"[SHUTDOWN] {ctx.author} ({ctx.author.id}) has shutdown the bot.")
+    print(timestamp() + f"{ctx.author} ({ctx.author.id}) has shutdown the bot.")
 
 
 def voice_update(member, before, after):

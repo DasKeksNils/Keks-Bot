@@ -58,16 +58,22 @@ async def member_kick(member, reason, mod):
         await webhook.send(embed=Embeds.kick(member, reason, mod))
 
 
-async def mute(member, mod, reason):
+async def mute(member, mod, reason, ban_id):
     async with aiohttp.ClientSession() as session:
         webhook = Webhook.from_url(startup()["log_wh"], adapter=AsyncWebhookAdapter(session))
-        await webhook.send(embed=Embeds.mute(member=member, mod=mod, reason=reason))
+        await webhook.send(embed=Embeds.mute(member=member, mod=mod, reason=reason, ban_id=ban_id))
 
 
-async def unmute(member, mod):
+async def tempmute(member, mod, reason, ban_id, duration):
     async with aiohttp.ClientSession() as session:
         webhook = Webhook.from_url(startup()["log_wh"], adapter=AsyncWebhookAdapter(session))
-        await webhook.send(embed=Embeds.unmute(member=member, mod=mod))
+        await webhook.send(embed=Embeds.tempmute(member=member, mod=mod, reason=reason, ban_id=ban_id, duration=duration))
+
+
+async def unmute(member, mod, ban_id, reason, totype):
+    async with aiohttp.ClientSession() as session:
+        webhook = Webhook.from_url(startup()["log_wh"], adapter=AsyncWebhookAdapter(session))
+        await webhook.send(embed=Embeds.unmute(member=member, mod=mod, ban_id=ban_id, reason=reason, totype=totype))
 
 
 async def channel_create(channel):

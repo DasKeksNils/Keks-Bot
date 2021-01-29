@@ -1,6 +1,7 @@
 import json
 import discord
 from discord.ext import commands
+from pymongo import MongoClient
 
 
 def bot():
@@ -12,16 +13,25 @@ def bot():
 
 def startup():
     with open("config/startup.json") as file:
-        startup = json.load(file)
-    return startup
+        return json.load(file)
 
 
 def channels():
     with open("config/Channels.json") as file:
-        channels = json.load(file)
-    return channels
+        return json.load(file)
 
 
 def log_channel(client):
-    log_ch = client.get_channel(int(channels()["log_channel_id"]))
-    return log_ch
+    return client.get_channel(int(channels()["log_channel_id"]))
+
+
+def mongo():
+    with open("config/mongodb.json") as file:
+        return json.load(file)
+
+
+def tempmutes():
+    cluster = MongoClient(mongo()["connection_id"])
+    db = cluster["Discord"]
+    collection = db["tempmutes"]
+    return collection

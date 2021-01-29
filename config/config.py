@@ -30,8 +30,22 @@ def mongo():
         return json.load(file)
 
 
-def tempmutes():
+def mutes():
     cluster = MongoClient(mongo()["connection_id"])
     db = cluster["Discord"]
-    collection = db["tempmutes"]
+    collection = db["Mutes"]
+    return collection
+
+
+def bans():
+    cluster = MongoClient(mongo()["connection_id"])
+    db = cluster["Discord"]
+    collection = db["Bans"]
+    return collection
+
+
+def history():
+    cluster = MongoClient(mongo()["connection_id"])
+    db = cluster["Discord"]
+    collection = db["history"]
     return collection

@@ -11,11 +11,8 @@ intents.members = True
 bot = commands.Bot(command_prefix=".", intents=intents)
 
 
-print("ms1")
 message_events(bot)
-print("ms2")
 Index.self_commands(bot)
-print("ms3")
 
 
 subprocess.call("start Database/unmute_temps.py", shell=True)  # change shell=False for no console

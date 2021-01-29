@@ -69,16 +69,16 @@ def kick(member, reason, mod):
     log.info(timestamp() + f"[KICK] {member} ({member.id}) got kicked by {mod} ({mod.id}) because of: {reason}")
 
 
-def mute(member, mod, reason, ban_id):
-    log.info(timestamp() + f"[MUTE] {member} ({member.id}) was muted (ban_id: {ban_id}) by {mod} ({mod.id}) because of: {reason}")
+def mute(member, mod, reason, mute_id):
+    log.info(timestamp() + f"[MUTE] {member} ({member.id}) was muted (mute_id: {mute_id}) by {mod} ({mod.id}) because of: {reason}")
 
 
-def tempmute(member, mod, reason, duration, ban_id):
-    log.info(timestamp() + f"[TEMPMUTE] {member} ({member.id}) was tempmuted (ban_id: {ban_id}) {duration} by {mod} ({mod.id}) because of {reason}")
+def tempmute(member, mod, reason, duration, mute_id):
+    log.info(timestamp() + f"[TEMPMUTE] {member} ({member.id}) was tempmuted (mute_id: {mute_id}) {duration} by {mod} ({mod.id}) because of {reason}")
 
 
-def unmute(member, mod):
-    log.info(timestamp() + f"[UNMUTE] {member} ({member.id}) was unmuted by {mod} ({mod.id})")
+def unmute(member, mod, mute_id):
+    log.info(timestamp() + f"[UNMUTE] {member} ({member.id}) was unmuted (mute_id: {mute_id}) by {mod} ({mod.id})")
 
 
 def channel_create(channel):

@@ -3,7 +3,6 @@ from config import log
 from config import config
 import Webhook.log_send as ch_log
 from Moderating.Perms import role as perms
-# from Database import unmute_temps as unmute
 
 
 def message_events(bot):
@@ -11,15 +10,7 @@ def message_events(bot):
     @bot.event
     async def on_ready():
         log.ready(bot)
-        print(1)
         await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name="https://github.com/DerKeksTV/Keks-Bot"))
-        print(2)
-
-        # asyncio.run(await asyncio.threads.to_thread(await unmute.unmute_loop(bot)))
-        # Process.run(Process(target=unmute.unmute_loop, args=bot,))
-        # t = threading.Thread(target=asyncio.set(await unmute.unmute_loop(bot)))
-        # print(1.5)
-        # t.start()
 
     @bot.event
     async def on_resumed():

@@ -1,19 +1,19 @@
 
-from config.config import tempmutes
+from config.config import mutes
 from config import log
 import Webhook.log_send as ch_log
 
 
-def get_ban_ids():
-    ban_ids = tempmutes().find({"_id": 0})
+def get_mute_ids():
+    ban_ids = mutes().find({"_id": 0})
     for re in ban_ids:
-        return re["ban_id"]
+        return re["mute_id"]
 
 
 async def insert(user, mute_end, duration, reason, mod, ctx):
-    ban_ids = get_ban_ids()
-    tempmutes().insert({
-        "ban_id": ban_ids + 1,
+    mute_id = get_mute_ids() + 1
+    mutes().insert({
+        "mute_id": mute_id,
         "type": "Tempmute",
         "name": user.name,
         "user_id": user.id,
@@ -22,10 +22,10 @@ async def insert(user, mute_end, duration, reason, mod, ctx):
         "reason": reason,
         "guild_id": ctx.guild.id
     })
-    tempmutes().update_one({"_id": 0}, {"$set": {"ban_id": ban_ids + 1}})
-    await ch_log.tempmute(member=user, mod=mod, reason=reason, ban_id="#" + str(ban_ids + 1), duration=duration)
-    log.tempmute(member=user, mod=mod, reason=reason, duration=duration, ban_id=ban_ids + 1)
+    mutes().update_one({"_id": 0}, {"$set": {"ban_id": mute_id + 1}})
+    await ch_log.tempmute(member=user, mod=mod, reason=reason, mute_id=f"#{mute_id}", duration=duration)
+    log.tempmute(member=user, mod=mod, reason=reason, duration=duration, mute_id=mute_id)
 
 
 def is_in_db(user):
-    return tempmutes().find_one({"user_id": user.id})
+    return mutes().find_one({"user_id": user.id})

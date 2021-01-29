@@ -25,7 +25,7 @@ def mongo():
 def db():
     cluster = MongoClient(mongo()["connection_id"])
     data = cluster["Discord"]
-    collection = data["tempmutes"]
+    collection = data["Mutes"]
     return collection
 
 
@@ -37,23 +37,23 @@ def timestamp():
     return str(time.strftime(" [%m/%d/%Y | %H:%M:%S] ", time.localtime()))
 
 
-async def unmute(member, mod, ban_id, reason, totype):
+async def unmute(member, mod, mute_id, reason, totype):
     async with aiohttp.ClientSession() as session:
         webhook = Webhook.from_url(startup()["log_wh"], adapter=AsyncWebhookAdapter(session))
-        await webhook.send(embed=unmute_emb(member=member, mod=mod, ban_id=ban_id, reason=reason, totype=totype))
+        await webhook.send(embed=unmute_emb(member=member, mod=mod, mute_id=mute_id, reason=reason, totype=totype))
 
 
 def log_unmute(member, mod):
     log.info(timestamp() + f"[UNMUTE] {member} ({member.id}) was unmuted by {mod} ({mod.id})")
 
 
-def unmute_emb(member, mod, ban_id, reason, totype):
+def unmute_emb(member, mod, mute_id, reason, totype):
     unmute_embed = discord.Embed(
         title="Member unmuted",
         color=discord.Colour.green()
     )
     unmute_embed.add_field(name="Moderator", value=mod)
-    unmute_embed.add_field(name="Ban_id", value=ban_id)
+    unmute_embed.add_field(name="Mute_id", value=mute_id)
     unmute_embed.add_field(name="Type", value=totype)
     unmute_embed.add_field(name="reason", value=reason)
     unmute_embed.set_author(name=member.name, icon_url=member.avatar_url)
@@ -72,7 +72,7 @@ async def unmute_loop(bot):
             mute_end = i["mute_end"]
             if int(mute_end) - utc_sec() < 0:
                 totype = "Tempmute"
-                ban_id = i["ban_id"]
+                mute_id = i["mute_id"]
                 reason = i["reason"]
                 user_id = i["user_id"]
                 guild_id = i["guild_id"]
@@ -81,7 +81,7 @@ async def unmute_loop(bot):
                 user = await guild.fetch_member(int(user_id))
                 await user.remove_roles(discord.utils.get(guild.roles, name="Muted"))
                 db().find_one_and_delete({"user_id": user.id})
-                await unmute(member=user, mod=bot.user, ban_id="#" + str(ban_id), reason=reason, totype=totype)
+                await unmute(member=user, mod=bot.user, mute_id=f"#{mute_id}", reason=reason, totype=totype)
                 log_unmute(member=user, mod=bot.user)
 
 intents = discord.Intents.default()
@@ -98,5 +98,6 @@ async def on_ready():
 @bot.event
 async def on_command_error():
     return
+
 
 bot.run(startup()["token"])  # this will run with the same token and will start ca. 15 secs after the main bot

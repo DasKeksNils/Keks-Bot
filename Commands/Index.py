@@ -1,4 +1,4 @@
-from Commands import admin_c, ban_c, clear_c, mute_c, roles_c, serverstats, tempmute, user_cmds, whois
+from Commands import admin_c, ban_c, clear_c, mute_c, roles_c, serverstats, tempmute, user_cmds, whois, database_setup
 
 
 def self_commands(bot):
@@ -11,3 +11,4 @@ def self_commands(bot):
     whois.command(bot)
     serverstats.stats_cmd(bot)
     tempmute.temp_cmds(bot)
+    database_setup.setup(bot)

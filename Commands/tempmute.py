@@ -7,7 +7,6 @@ from Database import insert_tempmute as data
 
 
 def temp_cmds(bot):
-    print("temps load")
 
     @bot.command()
     @commands.has_any_role("Admin", "Dev", "Moderator")

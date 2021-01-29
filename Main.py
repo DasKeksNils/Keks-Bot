@@ -4,7 +4,7 @@ from Commands import Index
 
 import discord
 from discord.ext import commands
-import os
+import subprocess
 
 intents = discord.Intents.default()
 intents.members = True
@@ -18,7 +18,8 @@ Index.self_commands(bot)
 print("ms3")
 
 
-os.system("start Database/unmute_temps.py")
+subprocess.call("start Database/unmute_temps.py", shell=True)  # change shell=False for no console
+
 
 bot.run(config.startup()["token"])
 

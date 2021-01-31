@@ -30,6 +30,7 @@ def ban_commands(bot):
             await ctx.guild.kick(user, reason=reason)
             await ch_log.member_kick(user, reason, ctx.author)
             log.kick(user, reason, ctx.author)
+            bans().update_one({"_id": 0}, {"$set": {"ban_id": ban_id}})
             history.kick(member=user, ban_id=ban_id, reason=reason, guild_id=ctx.guild.id)
 
     @bot.command()

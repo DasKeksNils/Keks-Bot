@@ -4,7 +4,7 @@ from Moderating.Perms import role
 
 
 def timestamp():
-    return str(time.strftime("%m/%d/%Y at %H:%M", time.localtime()))
+    return str(time.strftime("[%m/%d/%Y at %H:%M]", time.localtime()))
 
 
 def join(member):
@@ -21,7 +21,7 @@ def join(member):
 def leave(member):
     member_leave = discord.Embed(
         title="Member left",
-        description="Joined at " + str(member.created_at),
+        description="Joined at " + str(member.joined_at),
         colour=discord.Colour.red()
     )
     member_leave.set_footer(text=f"{member.id} \n" + timestamp(), icon_url=member_leave.Empty)

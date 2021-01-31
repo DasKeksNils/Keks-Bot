@@ -9,7 +9,7 @@ import logging as log
 import discord
 from discord.ext import commands
 
-log.basicConfig(filename="log.log", level=log.INFO)
+log.basicConfig(filename="./config/log.log", level=log.INFO)
 
 
 def startup():
@@ -34,7 +34,7 @@ def utc_sec():
 
 
 def timestamp():
-    return str(time.strftime(" [%m/%d/%Y | %H:%M:%S] ", time.localtime()))
+    return str(time.strftime("[%m/%d/%Y | %H:%M]", time.localtime()))
 
 
 async def unmute(member, mod, mute_id, reason, totype):
@@ -66,7 +66,8 @@ async def unmute_loop(bot):
 
     while True:
         print("new loop")
-        time.sleep(10)
+        time.sleep(15)
+        print(bot.latency)
         db_users = db().find({"type": "Tempmute"})
         for i in db_users:
             mute_end = i["mute_end"]

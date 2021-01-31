@@ -5,6 +5,7 @@ import Webhook.log_send as ch_log
 from Moderating.Perms import errors
 from config.config import mutes
 from Database import insert_tempmute as data
+from Database import history
 
 
 def get_mute_ids():
@@ -38,8 +39,9 @@ def mute_user(bot):
                 "reason": reason,
                 "guild_id": ctx.guild.id
             })
-            mutes().update_one({"_id": 0}, {"$set": {"mute_id": mute_id + 1}})
+            mutes().update_one({"_id": 0}, {"$set": {"mute_id": mute_id}})
 
+            history.mute(member=user, reason=reason, mute_id=mute_id, guild_id=ctx.guild.id)
             log.mute(member=user, mod=ctx.author, reason=reason, mute_id=f"#{mute_id}")
             await ch_log.mute(member=user, mod=ctx.author, reason=reason, mute_id=f"#{mute_id}")
             await ctx.send(f"{user} is now muted!")
